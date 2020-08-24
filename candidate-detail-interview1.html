@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>TAMS-Candidate Detail</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+  <style>
+    /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+    
+</style>
+    
+<script type="text/javascript">
+    
+    function openCity(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+    
+<!--sweetalert-->
+     <script>
+        function sweetalertclick(){
+            Swal.fire({
+                        title: 'Select file',
+                      input: 'file',
+                      inputAttributes: {
+                        'accept': 'image/*',
+                        'aria-label': 'Upload your profile picture'
+                      }
+                    })
+        }
+    
+        function neweventclick(){
+            Swal.fire({
+                    title: 'ADD New Event',
+                        html:
+                        '<label>Jenis Event :</label>' +
+                        '<input id="swal-input1" class="swal2-input">' +
+                        '<label>Date :</label>' +
+                        '<input id="swal-input2" class="swal2-input">' +
+                        '<label>Time :</label>' +
+                        '<input id="swal-input2" class="swal2-input">' +
+                        '<label>Venue :</label>' +
+                        '<input id="swal-input2" class="swal2-input">' +
+                        '<label>PIC :</label>' +
+                        '<input id="swal-input2" class="swal2-input">' ,
+                          focusConfirm: false,
+                          preConfirm: () => {
+                        return [
+                          document.getElementById('swal-input1').value,
+                          document.getElementById('swal-input2').value
+                        ]
+                      }
+                    })
+
+if (formValues) {
+  Swal.fire(JSON.stringify(formValues))
+}
+        }
+        function rejectbuttonclick(){
+            Swal.fire({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, reject it!'
+}).then((result) => {
+  if (result.value) {
+    Swal.fire(
+      'Rejected!',
+      'Applicant has been rejected.',
+      'success'
+    ).then(function() {
+        window.location = "mpr-detail.html";
+                    });
+  }
+})
+                                    }
+        function nextstagebuttonclick(){
+            Swal.fire({
+                      title: 'Select Stage',
+                      input: 'select',
+                      inputOptions: {
+                            '1': 'Interview 2',
+                            '2': 'OFL'
+                      },
+                      inputPlaceholder: 'required',
+                      showCancelButton: true,
+                      inputValidator: function (value) {
+                                return new Promise(function (resolve, reject) {
+                                  if (value !== '') {
+                                    resolve();
+                                  } else {
+                                    resolve('You need to select a Stage');
+                                  }
+                                });
+                      }
+                        }).then(function (result) {
+                          if (result.value) {
+                            Swal.fire({
+                              icon: 'success',
+                              html: 'You selected: ' + result.value
+                            }).then(function() {
+                                window.location = "candidate-detail-interview2.html";
+                            })
+                          }
+                        });
+                                    }
+    function kfrbuttonclick(){
+            Swal.fire({
+                      title: 'Select Division',
+                      input: 'select',
+                      inputOptions: {
+                            '1': 'Tier 1',
+                            '2': 'Tier 2',
+                            '3': 'Tier 3'
+                      },
+                      inputPlaceholder: 'required',
+                      showCancelButton: true,
+                      inputValidator: function (value) {
+                                return new Promise(function (resolve, reject) {
+                                  if (value !== '') {
+                                    resolve();
+                                  } else {
+                                    resolve('You need to select a Tier');
+                                  }
+                                });
+                      }
+                        }).then(function (result) {
+                          if (result.value) {
+                            Swal.fire({
+                              icon: 'success',
+                              html: 'You selected: ' + result.value
+                            }).then(function() {
+                                window.location = "mpr-detail.html";
+                            });
+                          }
+                        });
+                                    }
+    </script>
+    
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <form class="form-inline">
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+              <i class="fa fa-bars"></i>
+            </button>
+          </form>
+
+          <!-- Topbar Search -->
+          <!-- Topbar Search -->
+          <h1 class="mr-5">TAMS</h1>
+            <a href="dashboard.html" class="mr-3">DASHBOARD</a>
+            <a href="mpr.html" class="mr-3">MPR</a>
+            <a href="candidate.html" class="mr-3">CANDIDATE</a>
+            <a href="Keep%20for%20refrence.html" class="mr-3">TALENT POOL</a>
+            <a href="blank.html" class="mr-3">REPORT</a>
+            <a href="setting-roles.html" class="mr-3">SETTING</a>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+            <li class="nav-item dropdown no-arrow d-sm-none">
+              <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-search fa-fw"></i>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                <form class="form-inline mr-auto w-100 navbar-search">
+                  <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </li>
+
+            <!-- Nav Item - Alerts -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <!-- Counter - Alerts -->
+                <span class="badge badge-danger badge-counter">3+</span>
+              </a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Alerts Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-success">
+                      <i class="fas fa-donate text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 7, 2019</div>
+                    $290.29 has been deposited into your account!
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 2, 2019</div>
+                    Spending Alert: We've noticed unusually high spending for your account.
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+              </div>
+            </li>
+
+            <!-- Nav Item - Messages -->
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-envelope fa-fw"></i>
+                <!-- Counter - Messages -->
+                <span class="badge badge-danger badge-counter">7</span>
+              </a>
+              <!-- Dropdown - Messages -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                <h6 class="dropdown-header">
+                  Message Center
+                </h6>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold">
+                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
+                    <div class="small text-gray-500">Emily Fowler · 58m</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
+                    <div class="status-indicator"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
+                    <div class="small text-gray-500">Jae Chun · 1d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
+                    <div class="status-indicator bg-warning"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
+                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
+                  </div>
+                </a>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div>
+                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
+                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
+                  </div>
+                </a>
+                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+              </div>
+            </li>
+
+            <div class="topbar-divider d-none d-sm-block"></div>
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              </a>
+              <!-- Dropdown - User Information -->
+              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Profile
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Settings
+                </a>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Activity Log
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                  Logout
+                </a>
+              </div>
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Candidate Detail</h1>
+            
+        <div class="card text-dark shadow"> 
+            <div class="card-body shadow">
+                <div class="row">
+            <div class="col-xl-8">
+            <h1 class="h3 text-gray-800">Hillman</h1>
+                <h2 class="h6 mb-5 ml-4 text-primary">Plant Manager</h2>
+                
+            </div>
+                <h1 class="h4 mt-2 text-gray-800">Stage :</h1>
+                <h2 class="h4 mt-2 ml-4 text-primary">Interview1</h2>    
+                    <h1 class="h4 mt-2 text-gray-800 ml-5">Status :</h1>
+                <h2 class="h4 mt-2 ml-4 text-warning">Open</h2> 
+            </div>
+            <div class="row mb-3 ml-2">
+                <div class="col-xl-2 col-md-2 card shadow">
+                    <div class="card-body">
+                    <div class="row">Gender         :</div>
+                    <div class="row">Date of Birth  :</div>
+                    <div class="row">Address        :</div> <br><br>
+                    <div class="row">Phone          :</div>
+                    <div class="row">Email          :</div>
+                    <div class="row">Current Job    :</div>
+                    <div class="row">Education      :</div>
+                    <div class="row">City           :</div>
+                    </div>
+                </div>
+                
+                <div class="col-xl-2 col-md-2 card shadow">
+                    <div class="card-body">
+                    <div class="row">Male</div>
+                    <div class="row">01-05-1999</div>
+                    <div class="row">Jalan Cilandak</div> <br><br>
+                    <div class="row">0819191923</div>
+                    <div class="row">hilman@gmail.com</div>
+                    <div class="row">Finance</div>
+                    <div class="row">S3</div>
+                    <div class="row">Jakarta</div>
+                    </div>
+                </div>
+                <div class="col-xl-2 col-md-2 card shadow">
+                    <div class="card-body">
+                    <div class="row">Status Stage :</div>
+                    <a class="row text-warning" href="candidate-detail-candidate.html">Candidate : Closed</a>
+                    <a class="row text-warning" href="candidate-detail-init-interview.html">Inital Interview : Closed</a>
+                    <a class="row text-success" href="candidate-detail-interview1.html">Interview 1 : Open</a>
+                    <a class="row text-dark" href="#">Interview 2 :</a>
+                    <a class="row text-dark" href="#">Interview 3 :</a>
+                    <a class="row text-dark" href="#">Interview 4 :</a>
+                    <a class="row text-dark" href="#">OFL :</a>
+                    <a class="row text-dark" href="#">MCU :</a>
+                        <a class="row text-dark">Background Check :</a>
+                    <a class="row text-dark" href="#">Hired : </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-3">
+                <div class="col-xl-4">
+                    <div class="card shadow">
+                    <div class="card-header py3">
+                        <h6 class="m-0 font-weight-bold text-primary">Document Need</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                        <div class="col-8 mr-5">
+                        <div class="row">CV : cv.pdf</div>
+                        </div>
+                        <div class="col-1 ml-5">
+                        <div class="row mb-2"><button class="fas fa-download"></button></div>
+                        </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                </div>
+            </div>
+                <div class="row mb-3">
+                <div class="col-xl-7">
+                    <div class="card shadow">
+                    <div class="card-header py3">
+                        <h6 class="m-0 font-weight-bold text-primary">Result</h6>
+                    </div>
+                    <div class="card-body">
+                        <!-- Tab links -->
+<div class="tab">
+  <button class="tablinks" onclick="openCity(event, 'Init')">Initial interview</button>
+  <button class="tablinks" onclick="openCity(event, 'Interview1')">Interview1</button>
+</div>
+
+<!-- Tab content -->
+<div id="Interview1" class="tabcontent">
+  <h3></h3>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+</div>
+
+<div id="Init" class="tabcontent">
+  <h3></h3>
+  <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+
+</p>
+</div>
+                        <div class="row">
+                        <div class="col">
+                        <div class="row mt-3 ml-3">
+                            Attachment :
+                        </div>   
+                        <div class="row mt-2 ml-3">
+                            Initial interview : init-interview.pdf
+                        </div>  
+                            <div class="row mt-2 ml-3">
+                            Interview 1 : Interview1-hillman.pdf
+                        </div>  
+                        </div>
+                        <div class="col">
+                        <div class="row mt-5">
+                            <button class="fas fa-download"></button>
+                        </div>
+                        <div class="row mt-2">
+                            <button class="fas fa-plus" onclick="sweetalertclick()" type="button"></button>
+                        </div> 
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-11"></div>
+                            <div onclick="savebuttonclick()" class="col-1 btn btn-primary">Save</div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-xl-4">
+                    <div class="card shadow">
+                    <div class="card-header py3">
+                        <h6 class="m-0 font-weight-bold text-primary">Event</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                        <div class="col-6">
+                            Upcoming Event
+                        </div>
+                        <div class="col-">
+                            <button onclick="neweventclick()" type="button" class="btn btn-primary">ADD NEW EVENT</button>
+                        </div>
+                        </div>
+                        <div class="row mt-3">
+                        <div class="col-6">
+                            Inital Interview : 
+                        </div>
+                        <div class="col-">
+                            <button class="btn btn-primary">Event 1</button>
+                        </div>
+                        </div>
+                        <div class="row mt-3">
+                        <div class="col-6">
+                            Interview 1 : 
+                        </div>
+                        <div class="col-">
+                            <button class="btn btn-primary">Event 2</button>
+                        </div>
+                        </div>
+                        <div class="row mt-3">
+                        <div class="col-6">
+                            Interview 2 : 
+                        </div>
+                        <div class="col-">
+                            <button class="btn btn-primary">Event 3</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            
+        <div class="row"> 
+
+            <div class="col-xl-8"></div>
+            <div class="col-xl-4">
+                <button onclick="kfrbuttonclick()" class="btn btn-success mr-3 text-white" id="kfrButton">Keep For Refrence</button>
+                <button onclick="rejectbuttonclick()" class="btn btn-danger mr-3 text-white" id="rejectButon">Reject</button>
+<!--                <button onclick="nextstagebuttonclick()" class="btn btn-primary text-white" id="nextStagebutton">Next Stage</button>-->
+                <a href="candidate-detail-interview2.html" class="btn btn-primary text-white" id="nextStagebutton">Next Stage</a>
+            </div>        
+        </div>         
+                
+            </div>    
+        </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2020</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin-2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+</body>
+
+</html>

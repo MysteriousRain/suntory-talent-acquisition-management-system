@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Dialog - Modal confirmation</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#dialog" ).dialog({
+      autoOpen: false,
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        "Pass": function() {
+          $( this ).dialog( "close" );
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        },
+          "Keep for Refrence": function() {
+          $( this ).dialog( "close" );
+        },      }
+    });
+      
+       $("#anjing").on("click", function() {
+      $("#dialog").dialog("open");
+  }); 
+      
+  } );
+
+   
+  </script>
+</head>
+<body>
+ 
+<div id="dialog" title="Confirm">
+  <p><span class="" style="float:left; margin:12px 12px 20px 0;"></span>Pass to</p>
+    <select>
+        <option actived> Stage 2</option>
+    <option> Stage 3</option>
+        <option> Stage 4</option>
+    </select>
+    <p><span class="" style="float:left; margin:12px 12px 20px 0;"></span>Keep to</p>
+    <select>
+        <option actived> Sales</option>
+    <option> Marketing</option>
+        <option> ASM</option>
+    </select>
+</div>
+ 
+<button id="anjing">submit</button>
+ 
+ 
+</body>
+</html>

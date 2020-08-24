@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Dialog - Modal confirmation</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#dialog" ).dialog({
+      autoOpen: false,
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        "Confirm": function() {
+          $( this ).dialog( "close" );
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        },
+        }
+    });
+      
+       $("#anjing").on("click", function() {
+      $("#dialog").dialog("open");
+  }); 
+      
+  } );
+
+   
+  </script>
+</head>
+<body>
+ 
+<div id="dialog" title="ADD NEW EVENT">
+    <div class="row">
+        <div class="col">
+        <label>Jenis Event</label>
+        <input />
+        </div>
+        <div class="col-3">
+        <label>Date</label>
+        <input />
+        </div>
+        <div class="col-3">
+        <label>Time</label>
+        <input />
+        </div>
+        <div class="col-3">
+        <label>Venue</label>
+        <input />
+        </div>
+        <div class="col-3">
+        <label>PIC</label>
+        <input />
+        </div>
+    </div>
+    
+</div>
+ 
+<button id="anjing">submit</button>
+ 
+ 
+</body>
+</html>
